@@ -11,11 +11,6 @@
 @protocol PDTSimpleCalendarViewDelegate;
 
 /**
- *  Define the number of days in a week. Usually 7.
- */
-extern const NSUInteger PDTSimpleCalendarDaysPerWeek __deprecated_msg("Days per week are now automatically retrieve from Calendar. This variable will be removed in the next update.");
-
-/**
  *  `PDTSimpleCalendarViewController` is a `UICollectionViewController` subclass that displays a scrollable calendar view inspired by iOS7 Apple Cal App.
  */
 @interface PDTSimpleCalendarViewController : UICollectionViewController <UICollectionViewDelegateFlowLayout>
@@ -78,7 +73,14 @@ extern const NSUInteger PDTSimpleCalendarDaysPerWeek __deprecated_msg("Days per 
  *  @param newSelectedDate the date that will be selected
  *  @param animated        if you want to animate the scrolling
  */
-- (void)setSelectedDate:(NSDate *)newSelectedDate animated:(BOOL)animated;
+- (void)setSelectedDate:(NSDate *)newSelectedDate animated:(BOOL)animated __attribute__((deprecated("Use setSelectedDate: instead. Also setSelectedDate doesn't automatically scroll to the selected date. You need to explicitly call scrollToDate:animated: (or scrollToSelectedDate:)")));
+
+/**
+ *  Scroll to the current selected date in the calendar.
+ *
+ *  @param animated if you want to animate the scrolling
+ */
+- (void)scrollToSelectedDate:(BOOL)animated;
 
 /**
  *  Scroll to a certain date in the calendar.
@@ -134,12 +136,5 @@ extern const NSUInteger PDTSimpleCalendarDaysPerWeek __deprecated_msg("Days per 
  *  @param date       the date (Midnight GMT)
  */
 - (UIColor *)simpleCalendarViewController:(PDTSimpleCalendarViewController *)controller textColorForDate:(NSDate *)date;
-
-#pragma mark - Deprecated Methods
-
-- (void)simpleCalendarViewDidSelectDate:(NSDate *)date __attribute__((deprecated("Use simpleCalendarViewController:didSelectDate: instead")));
-- (BOOL)simpleCalendarShouldUseCustomColorsForDate:(NSDate *)date __attribute__((deprecated("Use simpleCalendarViewController:shouldUseCustomColorsForDate: instead")));
-- (UIColor *)simpleCalendarCircleColorForDate:(NSDate *)date __attribute__((deprecated("Use simpleCalendarViewController:circleColorForDate: instead")));
-- (UIColor *)simpleCalendarTextColorForDate:(NSDate *)date __attribute__((deprecated("Use simpleCalendarViewController:textColorForDate: instead")));
 
 @end;
